@@ -1,11 +1,11 @@
-import mongoose, { Mongoose } from 'mongoose';
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const flagEntrySchema = new Schema({
-    title: { 
+const markerEntrySchema = new Schema({
+    title: {
         type: String,
         required: true
-     },
+    },
     description: String,
     body: String,
     comments: String,
@@ -17,19 +17,25 @@ const flagEntrySchema = new Schema({
     },
     latitude: {
         type: Number,
-        required: true
+        required: true,
+        min: -90,
+        max: 90
     },
     longitude: {
         type: Number,
-        required: true
+        required: true,
+        min: -180,
+        max: 180
     },
     date: {
         required: true,
         type: Date
     },
-    timestamps: true
-});
 
-const FlagEntry = Mongoose.model('FlagEntry', flagEntrySchema);
+},
+    { timeStamps: true }
+);
 
-module.exports = FlagEntry
+const MarkerEntry = mongoose.model('MarkerEntry', markerEntrySchema);
+
+module.exports = MarkerEntry
