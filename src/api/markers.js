@@ -4,18 +4,19 @@ const MarkerEntry = require('../models/markerEntry');
 
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const entries = await MarkerEntry.find();
     res.json({
-        message: '🚀'
-    })
-})
+        entries,
+    });
+});
 
 router.post('/', async (req, res, next) => {
     try {
         const markerEntry = new MarkerEntry(req.body);
         const createdEntry = await markerEntry.save();
         res.json(createdEntry)
-    } catch(error) {
+    } catch (error) {
         if (error.name === 'ValidationError') {
             res.status(422);
         }
